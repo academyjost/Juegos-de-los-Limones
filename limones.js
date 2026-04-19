@@ -15,10 +15,11 @@ let limonY=5;
 let puntaje=0;
 let vidas=3;
 let velocidadCaida=200;
-
+let idIntervalo;
 
 function iniciar(){
-    setInterval(bajarLimon,velocidadCaida);
+    clearInterval(idIntervalo);
+    idIntervalo=setInterval(bajarLimon,velocidadCaida);
     dibujarSuelo();
     dibujarPersonaje();
     aparecerLimon();
@@ -64,16 +65,39 @@ function detectarColision(){
         aparecerLimon();
         puntaje=puntaje+1;
         mostrarEnSpan("txtPuntaje",puntaje);
-
+        if (puntaje>=10){
+            finalizarJuego("¡GANASTE! Eres un experto atrapando limones.");
+        }else{
+            velocidadActual -= 15;
+            reinicioIntervalo();
+            aparecerLimon();
+        }
     }
 }
 function detectarPiso(){
     if(limonY+Altura_Limon>canvas.height-Altura_Suelo){
         //alert("¡Has perdido!");
-        aparecerLimon();
-        vidas=vidas-1;
+        vidas-=1;
         mostrarEnSpan("txtVidas",vidas);
+        if (vidas<=0){
+            finalizarJuego("¡PERDISTE! Has perdido todas tus vidas.");
+        }else{
+            aparecerLimon();
+       }
     }
+} 
+
+function reinicioIntervalo() {
+    clearInterval(idIntervalo);
+    idIntervalo = setInterval(bajarLimon, velocidadActual);
+}
+
+function finalizarJuego(mensaje) {
+    clearInterval(idIntervalo);
+    setTimeout(() => {
+        alert(mensaje);
+        reiniciar();
+    }, 100);
 }
 
 function probarAleatorio(){
@@ -81,7 +105,14 @@ function probarAleatorio(){
     console.log(numero);
 }
 function aparecerLimon(){
-    limonX=generarAleatorio(0,canvas.width-Ancho_Limon);
-    limonY=0;
-    actualizarPantalla();
+    limonX = generarAleatorio(0, canvas.width - Ancho_Limon);
+    limonY = 0;
+}
+function reiniciar(){
+    puntaje=0;
+    vidas=3;
+    mostrarEnSpan("txtPuntaje",puntaje);
+    mostrarEnSpan("txtVidas",vidas);
+    aparecerLimon();
+    iniciar();
 }
