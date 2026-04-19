@@ -17,7 +17,7 @@ let limonY=5;
 function iniciar(){
     dibujarSuelo();
     dibujarPersonaje();
-    dibujarLimon();
+    aparecerLimon();
 }
 function dibujarSuelo(){
     ctx.fillStyle="#442165";
@@ -64,7 +64,7 @@ function probarAleatorio(){
     console.log(numero);
 }
 function aparecerLimon(){
-    limonY=generarAleatorio(0,canvas.width-Ancho_Limon);
-    limonX=0;
+    limonX=generarAleatorio(0,canvas.width-Ancho_Limon);
+    limonY=0;
     actualizarPantalla();
 }
