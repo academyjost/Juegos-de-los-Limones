@@ -25,12 +25,25 @@ function iniciar(){
     aparecerLimon();
 }
 function dibujarSuelo(){
-    ctx.fillStyle="#442165";
-    ctx.fillRect(0,canvas.height-Altura_Suelo,canvas.width,Altura_Suelo);
+    ctx.fillStyle = "#1a1a1a"; // Suelo gris muy oscuro
+    ctx.fillRect(0, canvas.height - Altura_Suelo, canvas.width, Altura_Suelo);
+    
+    // Línea decorativa roja en el suelo
+    ctx.strokeStyle = "#ff0000";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(0, canvas.height - Altura_Suelo, canvas.width, 1);
 }
 function dibujarPersonaje(){
-    ctx.fillStyle="#1900ff";
-    ctx.fillRect(personajeX,personajeY,Ancho_Personaje,Altura_Personaje);
+    // Cuerpo principal
+    ctx.fillStyle = "#000000";
+    ctx.fillRect(personajeX, personajeY, Ancho_Personaje, Altura_Personaje);
+    
+    // Detalle del "ojo ghoul"
+    ctx.fillStyle = "#ff0000";
+    ctx.fillRect(personajeX + 25, personajeY + 15, 8, 8);
+    
+    ctx.strokeStyle = "#ffffff";
+    ctx.strokeRect(personajeX, personajeY, Ancho_Personaje, Altura_Personaje);
 }
 function moverIzquierda(){
     personajeX=personajeX-=10;
@@ -50,8 +63,12 @@ function limpiarCanvas(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
 }
 function dibujarLimon(){
-    ctx.fillStyle="#94ca16";
-    ctx.fillRect(limonX,limonY,Ancho_Limon,Altura_Limon);
+    // El "limón" ahora es una celda RC roja
+    ctx.fillStyle = "#ff0000";
+    ctx.shadowBlur = 15;
+    ctx.shadowColor = "#ff0000";
+    ctx.fillRect(limonX, limonY, Ancho_Limon, Altura_Limon);
+    ctx.shadowBlur = 0; // Reset para no afectar otros dibujos
 }
 function bajarLimon(){
     limonY=limonY+=10;
